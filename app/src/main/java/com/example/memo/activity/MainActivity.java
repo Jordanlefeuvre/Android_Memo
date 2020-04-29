@@ -24,6 +24,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private MemosAdapter memosAdapter;
+    private List<MemoDTO> listMemoDTO = new ArrayList<MemoDTO>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +55,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "La derniere valeur cliquée est " + valeur, Toast.LENGTH_SHORT ).show();
         }
 
-        final List<MemoDTO> listMemoDTO = AppDatabaseHelper.getDatabase(this).MemosDAO().getListeMemos();
-
-
+        listMemoDTO = AppDatabaseHelper.getDatabase(this).MemosDAO().getListeMemos();
+        memosAdapter = new MemosAdapter(listMemoDTO, this);
 
         Button AddMemo = (Button) findViewById(R.id.addMemo);
 
@@ -64,11 +66,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 EditText editTextMemo = (EditText) findViewById(R.id.editTextMemo);
-
                 MemoDTO memoDTO = new MemoDTO(editTextMemo.getText().toString());
                 AppDatabaseHelper.getDatabase(view.getContext()).MemosDAO().insert(memoDTO);
+                editTextMemo.setText("");
                 listMemoDTO.add(memoDTO);
-                //listMemoDTO = AppDatabaseHelper.getDatabase(this).MemosDAO().getListeMemos();
+                memosAdapter.notifyItemInserted(listMemoDTO.size());
             }
         });
 
