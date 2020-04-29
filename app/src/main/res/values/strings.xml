@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Mémo</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_valider">Valider</string>
+    <string name="editTextMemo">Écrire ici le mémo</string>
+</resources>
